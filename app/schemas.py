@@ -1,7 +1,9 @@
 from typing import List, Optional
 from enum import Enum
+from datetime import date
 
 from pydantic import BaseModel, Field
+
 
 class Habit(BaseModel):
     id: str
@@ -13,7 +15,7 @@ class Habit(BaseModel):
 
 class Daily(BaseModel):
     id: str
-    date: str
+    date: date
     habits: List[Habit] = []
 
     class Config:

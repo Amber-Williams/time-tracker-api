@@ -8,6 +8,11 @@ def get_user_habits(db: Session, user_id: str):
         models.Habit.is_deleted == False
         ).all()
 
+def get_habit(db: Session, habit_id: str):
+    return db.query(models.Habit).filter(
+        models.Habit.id == habit_id
+        ).first()
+
 def add_user_habit(db: Session, habit_create: schemas.HabitCreate):
     db_habit = models.Habit(
         user_id=habit_create.user_id,
