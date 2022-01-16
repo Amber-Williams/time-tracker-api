@@ -14,8 +14,8 @@ def get_daily(db: Session, daily_id: str):
 def get_user_daily_range(db: Session, user_id: str, start: Date, end: Date):
     return db.query(models.Daily).filter(
         models.Daily.user_id == user_id, 
-            Daily.date >= start, Daily.date <= end
-        )
+            models.Daily.date >= start, models.Daily.date <= end
+        ).all()
 
 def get_user_dailies(db: Session, user_id: str):
     return db.query(models.Daily).filter(

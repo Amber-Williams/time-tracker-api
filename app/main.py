@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
@@ -34,8 +34,15 @@ def update_user_habit(habit_edit: schemas.HabitEdit, db: Session = Depends(get_d
     return db_habit
 
 @app.get("/daily/{user_id}", response_model=List[schemas.Daily])
-def read_user_dailies(user_id: str, db: Session = Depends(get_db)):
-    db_daily = crud_daily.get_user_dailies(db=db, user_id=user_id)
+def read_user_dailies(user_id: str, start: Optional[str] = None, end: Optional[str] = None, db: Session = Depends(get_db)):
+    if start and end:
+        db_daily = crud_daily.get_user_daily_range(
+            db=db,
+            user_id=user_id,
+            start=start,
+            end=end)
+    else:
+        db_daily = crud_daily.get_user_dailies(db=db, user_id=user_id)
     return db_daily
 
 @app.post("/daily", response_model=schemas.Daily)
