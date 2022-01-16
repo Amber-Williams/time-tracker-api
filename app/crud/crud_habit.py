@@ -12,7 +12,8 @@ def get_user_habits(db: Session, user_id: str):
 
 def get_habit(db: Session, habit_id: str):
     return db.query(models.Habit).filter(
-        models.Habit.id == habit_id
+        models.Habit.id == habit_id,
+        models.Habit.is_deleted == False
         ).first()
 
 def get_habits_from_strings(db: Session, str_habits: List[str]):
@@ -40,3 +41,11 @@ def update_user_habit(db: Session, habit_edit: schemas.HabitEdit):
     db.commit()
     db.refresh(db_habit)
     return db_habit
+
+def delete_user_habit(db: Session, habit_delete: schemas.HabitDelete):
+    db_habit = get_habit(db=db, habit_id=habit_delete.habit_id)
+    db_habit.is_deleted = True
+
+    db.commit()
+    db.refresh(db_habit)
+    return None
