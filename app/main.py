@@ -25,8 +25,13 @@ def read_user_habits(user_id: str, db: Session = Depends(get_db)):
 
 @app.post("/habits", response_model=schemas.Habit)
 def create_user_habit(habit_create: schemas.HabitCreate, db: Session = Depends(get_db)):
-    db_habits = crud_habit.add_user_habit(db=db, habit_create=habit_create)
-    return db_habits
+    db_habit = crud_habit.add_user_habit(db=db, habit_create=habit_create)
+    return db_habit
+
+@app.put("/habits", response_model=schemas.Habit)
+def update_user_habit(habit_edit: schemas.HabitEdit, db: Session = Depends(get_db)):
+    db_habit = crud_habit.update_user_habit(db=db, habit_edit=habit_edit)
+    return db_habit
 
 @app.get("/daily/{user_id}", response_model=List[schemas.Daily])
 def read_user_dailies(user_id: str, db: Session = Depends(get_db)):

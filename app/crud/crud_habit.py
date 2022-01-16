@@ -23,3 +23,11 @@ def add_user_habit(db: Session, habit_create: schemas.HabitCreate):
     db.commit()
     db.refresh(db_habit)
     return db_habit
+
+def update_user_habit(db: Session, habit_edit: schemas.HabitEdit):
+    db_habit = get_habit(db=db, habit_id=habit_edit.habit_id)
+    db_habit.name = habit_edit.name
+
+    db.commit()
+    db.refresh(db_habit)
+    return db_habit

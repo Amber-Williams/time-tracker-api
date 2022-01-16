@@ -26,13 +26,13 @@ class HabitCreate(BaseModel):
     name: str = Field(..., max_length=128)
 
 class HabitEdit(BaseModel):
-    habit_id: str
     user_id: str
+    habit_id: str
     name: str = Field(..., max_length=128)
 
 class HabitDelete(BaseModel):
-    habit_id: str
     user_id: str
+    habit_id: str
 
 class DailyCreate(BaseModel):
     user_id: str
@@ -40,6 +40,6 @@ class DailyCreate(BaseModel):
     habits: List[str] = []
 
 class DailyEdit(BaseModel):
-    daily_id: str
     user_id: str
+    daily_id: str
     habits: List[str] = []
