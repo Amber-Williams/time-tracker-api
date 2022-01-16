@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy.orm import Session
 
 from app import models, schemas
@@ -12,6 +14,13 @@ def get_habit(db: Session, habit_id: str):
     return db.query(models.Habit).filter(
         models.Habit.id == habit_id
         ).first()
+
+def get_habits_from_strings(db: Session, str_habits: List[str]):
+    habits = []
+    for habit_id in str_habits:
+        habit = get_habit(db=db, habit_id=habit_id)
+        habits.append(habit)
+    return habits
 
 def add_user_habit(db: Session, habit_create: schemas.HabitCreate):
     db_habit = models.Habit(

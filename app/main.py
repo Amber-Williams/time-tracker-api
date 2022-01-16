@@ -40,10 +40,12 @@ def read_user_dailies(user_id: str, db: Session = Depends(get_db)):
 
 @app.post("/daily", response_model=schemas.Daily)
 def create_user_daily(daily_create: schemas.DailyCreate, db: Session = Depends(get_db)):
-    habits = []
-    for habit_id in daily_create.habits:
-        habit = crud_habit.get_habit(db=db, habit_id=habit_id)
-        habits.append(habit)
-
+    habits = crud_habit.get_habits_from_strings(db=db, str_habits=daily_create.habits)
     db_daily = crud_daily.add_user_daily(db=db, daily_create=daily_create, habits=habits)
+    return db_daily
+
+@app.put("/daily", response_model=schemas.Daily)
+def update_user_daily(daily_edit: schemas.DailyEdit, db: Session = Depends(get_db)):
+    habits = crud_habit.get_habits_from_strings(db=db, str_habits=daily_edit.habits)
+    db_daily = crud_daily.update_user_daily(db=db, daily_id=daily_edit.daily_id, habits=habits)
     return db_daily

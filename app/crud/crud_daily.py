@@ -6,6 +6,11 @@ from dateutil import parser
 
 from app import models, schemas
 
+def get_daily(db: Session, daily_id: str):
+    return db.query(models.Daily).filter(
+        models.Daily.id == daily_id
+        ).first()
+
 def get_user_daily_range(db: Session, user_id: str, start: Date, end: Date):
     return db.query(models.Daily).filter(
         models.Daily.user_id == user_id, 
@@ -24,6 +29,14 @@ def add_user_daily(db: Session, daily_create: schemas.DailyCreate, habits: List[
         habits=habits
     )
     db.add(daily)
+    db.commit()
+    db.refresh(daily)
+    return daily
+
+def update_user_daily(db: Session, daily_id: str, habits: List[schemas.Habit]):
+    daily = get_daily(db=db, daily_id=daily_id)
+    daily.habits = habits
+
     db.commit()
     db.refresh(daily)
     return daily
