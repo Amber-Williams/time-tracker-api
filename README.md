@@ -1,10 +1,12 @@
 # time-tracker-api
 An app to track daily habits
 
+### Requirements
+Must have `poetry` installed on your system
+
 ### Set up
-1. Create your virtual environment - `python3 -m venv venv`
-1. Activate the projects virtual environment - `source venv/bin/activate`
-2. Install package dependencies - `pip install -r requirements.txt`
+1. Activate the projects virtual environment - `poetry shell`
+2. Install package dependencies - `poetry install`
 
 ### Running the application
 1. `uvicorn app.main:app --reload`
