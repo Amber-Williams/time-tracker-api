@@ -4,23 +4,28 @@ from sqlalchemy import Date
 from sqlalchemy.orm import Session
 from dateutil import parser
 
-from app import models, schemas
+import models
+import schemas
+
 
 def get_daily(db: Session, daily_id: str):
     return db.query(models.Daily).filter(
         models.Daily.id == daily_id
-        ).first()
+    ).first()
+
 
 def get_user_daily_range(db: Session, user_id: str, start: Date, end: Date):
     return db.query(models.Daily).filter(
-        models.Daily.user_id == user_id, 
-            models.Daily.date >= start, models.Daily.date <= end
-        ).all()
+        models.Daily.user_id == user_id,
+        models.Daily.date >= start, models.Daily.date <= end
+    ).all()
+
 
 def get_user_dailies(db: Session, user_id: str):
     return db.query(models.Daily).filter(
         models.Daily.user_id == user_id
-        ).all()
+    ).all()
+
 
 def add_user_daily(db: Session, daily_create: schemas.DailyCreate, habits: List[schemas.Habit]):
     daily = models.Daily(
@@ -32,6 +37,7 @@ def add_user_daily(db: Session, daily_create: schemas.DailyCreate, habits: List[
     db.commit()
     db.refresh(daily)
     return daily
+
 
 def update_user_daily(db: Session, daily_id: str, habits: List[schemas.Habit]):
     daily = get_daily(db=db, daily_id=daily_id)
