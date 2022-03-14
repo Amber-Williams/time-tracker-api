@@ -11,6 +11,11 @@ plugins:
 
 custom:
   pythonRequirements:
+    useDownloadCache: true
+    useStaticCache: true
+    noDeploy:
+      - pytest
+    usePoetry: true
     layer:
       name: time-tracker-api-layer
       description: time-tracker-api layer
@@ -33,4 +38,4 @@ functions:
     events:
       - http:
           method: any
-          path: /
+          path: /{proxy+}
