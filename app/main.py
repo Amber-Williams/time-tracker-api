@@ -31,6 +31,11 @@ def get_db():
         db.close()
 
 
+@app.get("/test/{test}")
+def root(test: str):
+    return {"message": test}
+
+
 @app.get("/habit/{user_id}", response_model=List[schemas.Habit])
 def read_user_habits(user_id: str, db: Session = Depends(get_db)):
     db_habits = crud_habit.get_user_habits(db=db, user_id=user_id)

@@ -133,7 +133,3 @@ sql_app.db
 
 # VS code
 .vscode/
-
-# Serverless
-.serverless/
-node_modules/
