@@ -14,10 +14,10 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
     poetry config virtualenvs.create false
 
 # Install repo dependencies
-COPY ./pyproject.toml ./poetry.lock* /app
+COPY ./pyproject.toml ./poetry.lock* /app/
 RUN poetry install --no-root --no-dev
 
-COPY ./app /app
+COPY ./app /app/
 
 CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8000"]
 
