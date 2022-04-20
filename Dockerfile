@@ -1,10 +1,10 @@
-FROM python:3.9
+FROM python:3.9.12-slim-buster
 
 WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update \
-  && apt-get -y install netcat gcc \
+  && apt-get -y install netcat gcc curl \
   && apt-get clean
 
 # Install Poetry
@@ -19,5 +19,6 @@ RUN poetry install --no-root --no-dev
 
 COPY ./app /app/
 
-CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8000"]
+EXPOSE 8000
 
+CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8000"]
