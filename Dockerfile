@@ -1,4 +1,4 @@
-FROM python:3.9.12-slim-buster
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9-slim
 
 WORKDIR /app
 
@@ -21,4 +21,4 @@ COPY ./app /app/
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8000"]
+CMD ["uvicorn", "main:app", "--timeout-keep-alive=10", "--host=0.0.0.0", "--port=8000"]

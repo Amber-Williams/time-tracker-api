@@ -31,9 +31,9 @@ def get_db():
         db.close()
 
 
-@app.get("/test/{test}")
-def root(test: str):
-    return {"message": test}
+@app.get("/health")
+def health_check():
+    return {"message": "success"}
 
 
 @app.get("/habit/{user_id}", response_model=List[schemas.Habit])
